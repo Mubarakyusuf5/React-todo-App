@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from './component/Input';
 import { Container } from './component/Container';
 
@@ -7,7 +7,7 @@ export const App = () => {
     const savedTodo = localStorage.getItem("todo");
     return savedTodo ? JSON.parse(savedTodo) : [];
   });
-  const [tasks, setTask] = useState('');
+  const [task, setTask] = useState('');
 
   useEffect(() => {
     localStorage.setItem("todo", JSON.stringify(todos));
@@ -24,8 +24,8 @@ export const App = () => {
   }
 
   const addTask = () => {
-    if (tasks.trim()) { 
-      setTodos([...todos, { text: tasks, completed: false }]);
+    if (task.trim()) { 
+      setTodos([...todos, { text: task, completed: false }]);
       setTask(''); 
     }
   };
@@ -49,12 +49,12 @@ export const App = () => {
         <Input 
         change={handleChange} 
         click={addTask} 
-        value={tasks}
+        value={task}
         press={handleKeyDown}
         />
      {todos.length === 0 ? (
       <div className="noTask">
-        <img src="/todo.jpg" alt="No task image" />
+        <img src="/todo.jpg" alt="No task image" loading="lazy" />
         <p className='title'>No Task</p> 
         <p className="text">Add a task to continue</p>
       </div>
