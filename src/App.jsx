@@ -3,8 +3,15 @@ import { Input } from './component/Input';
 import { Container } from './component/Container';
 
 export const App = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    const savedTodo = localStorage.getItem("todo");
+    return savedTodo ? JSON.parse(savedTodo) : [];
+  });
   const [tasks, setTask] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem("todo", JSON.stringify(todos));
+  }, [todos]);
 
   const handleChange = (e) => {
     setTask(e.target.value);
